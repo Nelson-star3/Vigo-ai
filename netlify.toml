@@ -2,10 +2,6 @@
   publish = "."
   functions = "netlify/functions"
 
-[functions]
-  # Free plan default is 10s. 26s only applies if Netlify enables it for your site.
-  timeout = 26
-
 [[redirects]]
   from = "/api/chat"
   to = "/.netlify/functions/chat"
