@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>vigoai.com</title>
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="VIGO AI">
+  <meta property="og:image" content="og-image.jpg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:image" content="og-image.jpg">
+  <link rel="stylesheet" href="vigo.css"/>
+</head>
+
+<body>
+<header>
+    <div id="historyBackdrop"></div>
+    <button id="historyBtn" aria-label="Recent messages">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="5" width="18" height="2.5" rx="1.25" fill="#333"/>
+        <rect x="3" y="11" width="18" height="2.5" rx="1.25" fill="#333"/>
+        <rect x="3" y="17" width="10" height="2.5" rx="1.25" fill="#333"/>
+      </svg>
+    </button>
+    <div class="brand">
+      <span class="headerOrbWrap"><img src="logo-header.png" alt="VIGO AI logo"></span>
+      <h1>VIGO <span>AI</span></h1>
+    </div>
+    <button id="settingsBtn" aria-label="Settings">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="#333">
+    <path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zm7.4-3.5c0-.6-.1-1.1-.2-1.6l1.9-1.5-2-3.4-2.2.9c-.8-.7-1.8-1.2-2.8-1.5L13.7 2h-3.4l-.4 2.4c-1 .3-2 .8-2.8 1.5l-2.2-.9-2 3.4 1.9 1.5c-.1.5-.2 1-.2 1.6s.1 1.1.2 1.6l-1.9 1.5 2 3.4 2.2-.9c.8.7 1.8 1.2 2.8 1.5l.4 2.4h3.4l.4-2.4c1-.3 2-.8 2.8-1.5l2.2.9 2-3.4-1.9-1.5c.1-.5.2-1 .2-1.6z"/>
+  </svg>
+</button>
+  </header>
+<div id="settingsBackdrop"></div>
+<div id="settingsPanel">
+  <button id="settingsCloseBtn">✕</button>
+  <h3>Settings</h3>
+
+  <div class="settingBlock">
+    <strong>Agentic mode</strong>
+    <small>Shows live thinking status while Vigo works.</small>
+    <div id="agenticModeOptions" class="optionPickerRow"></div>
+  </div>
+
+  <div class="settingBlock">
+    <strong>Web search</strong>
+    <small>Auto searches only for news, prices and other current facts.</small>
+    <div id="webSearchOptions" class="optionPickerRow"></div>
+  </div>
+
+  <div class="settingBlock">
+    <strong>Default model</strong>
+    <small>Used automatically when starting a new chat.</small>
+    <div id="defaultModelOptions" class="optionPickerRow"></div>
+  </div>
+
+  <div class="settingBlock">
+    <strong>Voice</strong>
+    <small>Used when playing AI replies aloud.</small>
+    <div id="voiceOptions" class="optionPickerRow"></div>
+  </div>
+</div>
+      <div id="livePill"><span id="liveDot"></span>LIVE</div>
+  
+  
+  <section class = "subBody" id="heroSection">
+    <p style= "margin-bottom : 15%;">Meet <b>vigo ai</b> from Nelson Company, your friendly Companion, made for vigorous tasks . Ask anything and see an advanced answer in real time </p>
+  <div id="heroOrbWrap">
+      <canvas id="heroCanvas"></canvas>
+      <div id="heroOrbLabel">VIGO</div>
+    </div>
+  </section>
+  <section class = "subBody">
+ <div id = "InputArea">
+        <textarea id="chatInput" placeholder="Chat with vigo..."></textarea>
+<div id = "InputBottom">
+  <button id="uploadBtn" type="button" aria-label="Upload image">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M12 5v14M5 12h14" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+  </button>
+
+      <!--Selecting a module -->
+      <div id="modelDropdown">
+        <button type="button" id="modelDropdownBtn">
+          <span id="modelDropdownLabel">VIGO V1.2</span>
+          <svg width="14" height="14" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke="#333" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <select name="select" id="select" style="display:none;">
+          <option value="vigo V1.2">VIGO V1.2</option>
+          <option value="vigo V1.0">VIGO V1.0</option>
+          <option value="veder(deep think)">VENDER V0.1</option>
+        </select>
+      </div>
+    
+    <button id="micBtn" type="button" aria-label="Voice input">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3z" stroke="#333" stroke-width="1.8" fill="none"/><path d="M19 11a7 7 0 0 1-14 0M12 18v3" stroke="#333" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+      </button>
+      <div id = "send">
+      <button id="sendBtn" type="submit">
+  <svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7" stroke="#333" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+      </div>
+    </div>
+  </div>
+  </section>
+  <!--sandboxed code or artifact-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script type="module" src="vigo.js"></script>
+</body>
+
+</html>
