@@ -924,11 +924,17 @@ const CODE_KEYWORDS = {
   python: ["def","return","if","elif","else","for","while","import","from","as","class","try","except","finally","with","in","is","not","and","or","None","True","False","lambda","pass","break","continue","yield","global","raise","async","await","self"],
   js: ["function","return","if","else","for","while","var","let","const","import","from","export","default","class","try","catch","finally","new","typeof","instanceof","in","of","null","undefined","true","false","async","await","switch","case","break","continue","this","extends","super","yield"],
   bash: ["if","then","else","fi","for","do","done","while","echo","function","export","return"],
-  css: [], html: [], json: []
+  css: [], json: ["true","false","null"],
+  java: ["public","private","protected","static","final","void","int","double","boolean","String","class","interface","extends","implements","new","return","if","else","for","while","try","catch","finally","throw","throws","import","package","this","null","true","false","switch","case","break","continue"],
+  c: ["int","char","float","double","void","long","short","unsigned","struct","enum","typedef","static","const","return","if","else","for","while","do","switch","case","break","continue","sizeof","include","define","NULL","class","public","private","new","delete","namespace","using","template","bool","true","false"],
+  go: ["func","package","import","var","const","type","struct","interface","return","if","else","for","range","switch","case","break","continue","go","defer","chan","map","nil","true","false"],
+  rust: ["fn","let","mut","pub","use","mod","struct","enum","impl","trait","return","if","else","for","while","loop","match","break","continue","self","Self","true","false","const","static","async","await"]
 };
 CODE_KEYWORDS.python3 = CODE_KEYWORDS.py = CODE_KEYWORDS.python;
 CODE_KEYWORDS.javascript = CODE_KEYWORDS.ts = CODE_KEYWORDS.typescript = CODE_KEYWORDS.js;
 CODE_KEYWORDS.sh = CODE_KEYWORDS.bash;
+CODE_KEYWORDS.html = CODE_KEYWORDS.xml = CODE_KEYWORDS.svg = CODE_KEYWORDS.vue = CODE_KEYWORDS.js;
+CODE_KEYWORDS.cpp = CODE_KEYWORDS["c++"] = CODE_KEYWORDS.cs = CODE_KEYWORDS.c;
 
 function highlightKeywords(escapedText, keywords) {
   if (!keywords || !keywords.length) return escapedText;
@@ -940,15 +946,20 @@ function highlightCode(code, lang) {
   const keywords = CODE_KEYWORDS[lang] || [];
   const escape = s => { const d = document.createElement("div"); d.textContent = s; return d.innerHTML; };
   const hashLang = ["python", "python3", "py", "bash", "sh", "yaml", "yml", "ruby", "rb"].includes(lang);
-  const c1 = hashLang ? "(?!)" : "(\\/\\/.*$)";
-  const c2 = hashLang ? "(#.*$)" : "(?!)";
-  const pattern = new RegExp(c1 + "|" + c2 + "|(\"(?:[^\"\\\\]|\\\\.)*\"|'(?:[^'\\\\]|\\\\.)*')|(\\b\\d+(?:\\.\\d+)?\\b)", "gm");
+  const c1 = hashLang ? "(\\b\\B)" : "(\\/\\/.*$)";
+  const c2 = hashLang ? "(#.*$)" : "(\\b\\B)";
+  const htmlLike = ["html", "xml", "svg", "vue"].includes(lang);
+  const c5 = htmlLike ? "(<!--[\\s\\S]*?-->)" : "(\\b\\B)";
+  const c6 = htmlLike ? "(<\\/?[a-zA-Z][\\w:-]*|\\/?>)" : "(\\b\\B)";
+  const pattern = new RegExp(c1 + "|" + c2 + "|(\"(?:[^\"\\\\]|\\\\.)*\"|'(?:[^'\\\\]|\\\\.)*')|(\\b\\d+(?:\\.\\d+)?\\b)|" + c5 + "|" + c6, "gm");
   let result = "", lastIndex = 0, match;
   while ((match = pattern.exec(code)) !== null) {
     result += highlightKeywords(escape(code.slice(lastIndex, match.index)), keywords);
     if (match[1] || match[2]) result += `<span style="color:#8a8a8a;">${escape(match[1] || match[2])}</span>`;
     else if (match[3]) result += `<span style="color:#c25a3f;">${escape(match[3])}</span>`;
     else if (match[4]) result += `<span style="color:#1c7ed6;">${escape(match[4])}</span>`;
+    else if (match[5]) result += `<span style="color:#8a8a8a;">${escape(match[5])}</span>`;
+    else if (match[6]) result += `<span style="color:#0b7285;font-weight:600;">${escape(match[6])}</span>`;
     lastIndex = pattern.lastIndex;
   }
   result += highlightKeywords(escape(code.slice(lastIndex)), keywords);
@@ -1003,7 +1014,7 @@ messagesContainer.id = "chatMessages";
 messagesContainer.style.display = "flex";
 messagesContainer.style.flexDirection = "column";
 messagesContainer.style.gap = "16px";
-messagesContainer.style.padding = "10px 1%";
+messagesContainer.style.padding = "10px 2px";
 messagesContainer.style.paddingBottom = "220px";
 inputArea.parentNode.insertBefore(messagesContainer, inputArea);
 

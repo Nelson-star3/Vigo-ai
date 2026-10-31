@@ -1197,3 +1197,4 @@ header h1 span {
 .inlineCode{background:#f0f0f0;border:1px solid #e0e0e0;border-radius:5px;padding:1px 5px;font-family:monospace;font-size:0.9em;}
 .subBody.heroHidden{display:none;}
 .headerOrbWrap img{object-fit:contain;border-radius:22%;}
+#chatSection{padding:0;}
